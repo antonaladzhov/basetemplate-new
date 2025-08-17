@@ -6,10 +6,12 @@ import Container from "@/components/ui/container";
 import Button from "@/components/ui/button";
 import { Menu, ChevronDown, Globe } from "lucide-react";
 import { useState } from "react";
+import { usePage } from "@/lib/page-context";
 
 export default function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("en");
+  const { isHomePage } = usePage();
 
   const languages = [
     { code: "en", name: "English" },
@@ -23,6 +25,11 @@ export default function Header() {
     setCurrentLanguage(code);
     setIsLanguageOpen(false);
   };
+
+  // Hide header on homepage since hero has integrated navbar
+  if (isHomePage) {
+    return null;
+  }
 
   return (
     <header className="surface-bg text-on-bg border-b border-border">
