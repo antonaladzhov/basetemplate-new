@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Property } from "@/lib/types";
-import PropertyCard from "@/components/blocks/property-card";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { formatPrice, formatRating } from "@/lib/utils";
 
@@ -110,21 +109,25 @@ export default function PropertyGrid({
       {/* Slider Container */}
       <div className="relative group">
         {/* Navigation Arrows */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
+        {totalSlides > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
 
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </>
+        )}
 
         {/* Slider */}
         <div
@@ -175,7 +178,7 @@ export default function PropertyGrid({
                     <p className="text-sm text-muted-foreground mb-2">{property.location}</p>
                     
                     <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                      <span>3 beds • 2 baths • 6 guests</span>
+                      <span>{property.beds} beds • {property.baths} baths • {property.guests} guests</span>
                     </div>
                     
                     <div className="flex items-center justify-between">
@@ -183,7 +186,7 @@ export default function PropertyGrid({
                         €{property.priceFrom} night
                       </span>
                       <span className="text-sm text-muted-foreground">
-                        €542 total
+                        €{property.priceFrom * 2} total
                       </span>
                     </div>
                   </div>

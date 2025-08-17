@@ -155,9 +155,14 @@ export const siteConfig: SiteConfig = siteConfigSchema.parse({
       featuredProperties: {
         heading: "Featured properties section heading placeholder",
         items: [
-          { id: "p1", title: "Property card title placeholder", location: "Property location placeholder", imageAlt: "Property image alt placeholder", beds: 3, baths: 2, guests: 6, priceFrom: 199, href: "/properties" },
-          { id: "p2", title: "Property card title placeholder", location: "Property location placeholder", imageAlt: "Property image alt placeholder", beds: 2, baths: 1, guests: 4, priceFrom: 149, href: "/properties" },
-          { id: "p3", title: "Property card title placeholder", location: "Property location placeholder", imageAlt: "Property image alt placeholder", beds: 4, baths: 3, guests: 8, priceFrom: 249, href: "/properties" },
+          { id: "p1", title: "Luxury Villa with Ocean View", location: "Miami Beach, FL", imageAlt: "Luxury villa with ocean view", beds: 4, baths: 3, guests: 8, priceFrom: 299, href: "/properties" },
+          { id: "p2", title: "Cozy Mountain Cabin", location: "Aspen, CO", imageAlt: "Cozy mountain cabin", beds: 3, baths: 2, guests: 6, priceFrom: 199, href: "/properties" },
+          { id: "p3", title: "Modern City Apartment", location: "New York, NY", imageAlt: "Modern city apartment", beds: 2, baths: 2, guests: 4, priceFrom: 249, href: "/properties" },
+          { id: "p4", title: "Beachfront Condo", location: "Malibu, CA", imageAlt: "Beachfront condo", beds: 3, baths: 2, guests: 6, priceFrom: 349, href: "/properties" },
+          { id: "p5", title: "Historic Townhouse", location: "Charleston, SC", imageAlt: "Historic townhouse", beds: 4, baths: 3, guests: 8, priceFrom: 279, href: "/properties" },
+          { id: "p6", title: "Desert Oasis Villa", location: "Palm Springs, CA", imageAlt: "Desert oasis villa", beds: 3, baths: 2, guests: 6, priceFrom: 189, href: "/properties" },
+          { id: "p7", title: "Lakefront Cottage", location: "Lake Tahoe, CA", imageAlt: "Lakefront cottage", beds: 2, baths: 1, guests: 4, priceFrom: 159, href: "/properties" },
+          { id: "p8", title: "Ski-in Chalet", location: "Vail, CO", imageAlt: "Ski-in chalet", beds: 5, baths: 4, guests: 10, priceFrom: 399, href: "/properties" },
         ],
       },
       experiencesHighlight: {
