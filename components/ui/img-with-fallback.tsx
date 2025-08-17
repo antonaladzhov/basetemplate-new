@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface ImgWithFallbackProps {
   src: string;
@@ -9,7 +9,6 @@ interface ImgWithFallbackProps {
   width: number;
   height: number;
   className?: string;
-  fallbackSrc?: string;
 }
 
 export default function ImgWithFallback({ 
@@ -17,22 +16,29 @@ export default function ImgWithFallback({
   alt, 
   width, 
   height, 
-  className,
-  fallbackSrc = "/images/placeholders/placeholder-800x600.jpg"
+  className 
 }: ImgWithFallbackProps) {
+  const [imgSrc, setImgSrc] = useState(src);
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = () => {
+    if (!hasError) {
+      setHasError(true);
+      setImgSrc("/images/placeholders/placeholder-800x600.svg");
+    }
+  };
+
+  const isSvg = src.toLowerCase().endsWith('.svg');
+
   return (
-    <div className={cn("relative overflow-hidden rounded-xl bg-muted", className)}>
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className="object-cover"
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.src = fallbackSrc;
-        }}
-      />
-    </div>
+    <Image
+      src={imgSrc}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+      onError={handleError}
+      unoptimized={isSvg}
+    />
   );
 }
