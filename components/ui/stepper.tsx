@@ -1,21 +1,21 @@
-import { cn } from "@/lib/utils";
+import { CheckCircle } from "lucide-react";
 
 interface StepperProps {
-  steps: Array<{ step: string; description: string }>;
+  items: Array<{ step: string; description: string }>;
   className?: string;
 }
 
-export default function Stepper({ steps, className }: StepperProps) {
+export default function Stepper({ items, className = "" }: StepperProps) {
   return (
-    <div className={cn("space-y-6", className)}>
-      {steps.map((item, index) => (
-        <div key={index} className="flex gap-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primaryFg text-sm font-medium">
+    <div className={`space-y-6 ${className}`}>
+      {items.map((item, index) => (
+        <div key={index} className="flex items-start gap-4">
+          <div className="flex-shrink-0 w-8 h-8 rounded-full surface-primary text-on-primary flex items-center justify-center text-sm font-medium">
             {index + 1}
           </div>
-          <div className="flex-1">
-            <h3 className="font-medium">{item.step}</h3>
-            <p className="mt-1 text-sm text-muted">{item.description}</p>
+          <div>
+            <h3 className="font-medium text-on-bg">{item.step}</h3>
+            <p className="mt-1 text-sm text-on-bg">{item.description}</p>
           </div>
         </div>
       ))}
