@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #100F12;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #6B7280;
+  --color-secondary-foreground: #FFFFFF;
+  --color-muted: #F3F4F6;
+  --color-muted-foreground: #6B7280;
+  --color-accent: #E5E7EB;
+  --color-accent-foreground: #374151;
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: #D1D5DB;
+  --color-input: #D1D5DB;
+  --color-ring: #100F12;
+  --color-background: #FFFFFF;
+  --color-foreground: #100F12;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #100F12;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #100F12;
+  --color-text: #100F12;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Surface + text pairs */
+.text-on-bg        { color: var(--color-text); }
+.text-on-muted     { color: var(--color-text); }
+.text-on-primary   { color: var(--color-primary-foreground); }
+.text-on-secondary { color: var(--color-primary-foreground); }
+.text-on-inverse   { color: #FFFFFF; }
+
+.surface-bg        { background: var(--color-background); }
+.surface-muted     { background: var(--color-muted); }
+.surface-primary   { background: var(--color-primary); }
+.surface-secondary { background: var(--color-secondary); }
+
+/* Image/Video sections: add a scrim to guarantee AA contrast for light text */
+.surface-image {
+  position: relative;
+  color: #FFFFFF; /* pairs with the scrim */
+}
+.surface-image::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+  pointer-events: none;
+}
+.surface-image > * { position: relative; }
