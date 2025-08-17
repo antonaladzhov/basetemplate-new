@@ -19,8 +19,12 @@ export default function HomePage() {
       {/* Featured Properties */}
       <section className="surface-muted text-on-muted py-12">
         <Container>
-          <h2 className="text-3xl font-heading mb-8 text-on-muted">{home.featuredProperties.heading}</h2>
-          <PropertyGrid properties={home.featuredProperties.items} />
+          <PropertyGrid 
+            properties={home.featuredProperties.items}
+            title="Most Loved Properties"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing"
+            showExploreAll={true}
+          />
         </Container>
       </section>
 
@@ -59,22 +63,6 @@ export default function HomePage() {
               );
             })}
           </div>
-        </Container>
-      </section>
-
-      {/* Book Direct */}
-      <section className="py-12">
-        <Container>
-          <h2 className="text-3xl font-heading mb-6">{home.bookDirect.heading}</h2>
-          <ul className="space-y-3 mb-6">
-            {home.bookDirect.bullets.map((bullet, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <div className="h-2 w-2 bg-primary rounded-full" />
-                {bullet}
-              </li>
-            ))}
-          </ul>
-          <Button href="/properties">Book Direct</Button>
         </Container>
       </section>
 
