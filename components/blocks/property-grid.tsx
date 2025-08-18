@@ -4,16 +4,19 @@ import { useState, useRef, useEffect } from "react";
 import { Property } from "@/lib/types";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { formatPrice, formatRating } from "@/lib/utils";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import Container from "@/components/ui/container";
 
 interface PropertyGridProps {
-  properties: Property[];
+  items: Property[];
   title?: string;
   description?: string;
   showExploreAll?: boolean;
 }
 
 export default function PropertyGrid({ 
-  properties, 
+  items, 
   title = "Most Loved Properties",
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing",
   showExploreAll = true 
@@ -26,17 +29,25 @@ export default function PropertyGrid({
 
   // Calculate how many cards to show based on screen size
   const getCardsPerView = () => {
-    if (typeof window === 'undefined') return 3;
+    if (typeof window === 'undefined') return 4;
     if (window.innerWidth < 640) return 1; // mobile
-    if (window.innerWidth < 1024) return 2; // tablet
-    return 3; // desktop
+    if (window.innerWidth < 768) return 2; // small tablet
+    if (window.innerWidth < 1024) return 3; // tablet
+    if (window.innerWidth < 1280) return 4; // desktop
+    return 5; // large desktop
   };
 
-  const [cardsPerView, setCardsPerView] = useState(getCardsPerView());
+  const [cardsPerView, setCardsPerView] = useState(4); // Default to 4 for SSR
 
   useEffect(() => {
+    // Set initial cards per view after component mounts
+    const newCardsPerView = getCardsPerView();
+    setCardsPerView(newCardsPerView);
+    
     const handleResize = () => {
-      setCardsPerView(getCardsPerView());
+      const newCardsPerView = getCardsPerView();
+      setCardsPerView(newCardsPerView);
+      // Reset to first slide when viewport changes
       setCurrentSlide(0);
     };
 
@@ -44,18 +55,18 @@ export default function PropertyGrid({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const totalSlides = Math.ceil(properties.length / cardsPerView);
+  const totalSlides = Math.max(1, Math.ceil(items.length / cardsPerView));
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setCurrentSlide((prev) => Math.max(prev - 1, 0));
   };
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index);
+    setCurrentSlide(Math.max(0, Math.min(index, totalSlides - 1)));
   };
 
   // Touch/Drag handlers
@@ -99,95 +110,94 @@ export default function PropertyGrid({
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-heading font-bold mb-4 text-on-muted">{title}</h2>
-        <p className="text-on-muted max-w-2xl mx-auto">{description}</p>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-on-bg mb-4">{title}</h2>
+        {description && (
+          <p className="text-lg text-on-bg/80 max-w-2xl mx-auto">{description}</p>
+        )}
       </div>
 
-      {/* Slider Container */}
-      <div className="relative group">
-        {/* Navigation Arrows */}
-        {totalSlides > 1 && (
-          <>
-            <button
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <button
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
-              aria-label="Next slide"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </>
-        )}
-
-        {/* Slider */}
-        <div
-          ref={sliderRef}
-          className="overflow-hidden"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
-        >
-          <div 
-            className="flex transition-transform duration-300 ease-in-out"
-            style={{
-              transform: `translateX(-${currentSlide * (100 / cardsPerView)}%)`,
-              width: `${(properties.length / cardsPerView) * 100}%`
-            }}
-          >
-            {properties.map((property, index) => (
-              <div 
-                key={property.id} 
-                className="flex-shrink-0 px-2"
-                style={{ width: `${100 / properties.length}%` }}
+      {/* Slider Container - Break out of parent constraints */}
+      <div className="relative group w-full -mx-8 px-8 overflow-hidden">
+        <div className="max-w-[1920px] mx-auto">
+          {/* Navigation Arrows */}
+          {totalSlides > 1 && (
+            <>
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
+                aria-label="Previous slide"
               >
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full surface-bg shadow-lg flex items-center justify-center text-on-bg hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </>
+          )}
+
+          {/* Slider Track */}
+          <div
+            ref={sliderRef}
+            className="flex transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing"
+            style={{
+              transform: `translateX(-${currentSlide * 100}%)`,
+            }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {items.map((property, index) => (
+              <div
+                key={property.id}
+                className="flex-shrink-0 px-3"
+                style={{ width: `${100 / cardsPerView}%` }}
+              >
+                <div className="surface-bg rounded-lg shadow-lg overflow-hidden group/card">
                   {/* Property Image */}
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
                     <img
                       src="/images/placeholders/placeholder-800x600.svg"
                       alt={property.imageAlt}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
                     />
                   </div>
-                  
+
                   {/* Property Info */}
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold text-on-bg">{property.title}</h3>
-                      <div className="flex items-center space-x-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{formatRating(4.8)}</span>
-                      </div>
+                  <div className="p-5">
+                    <h3 className="text-lg font-semibold text-on-bg mb-2">{property.title}</h3>
+                    <p className="text-on-bg/70 mb-3">{property.location}</p>
+                    
+                    {/* Property Details */}
+                    <div className="flex items-center gap-4 text-sm text-on-bg/70 mb-4">
+                      <span>{property.beds} beds</span>
+                      <span>{property.baths} baths</span>
+                      <span>{property.guests} guests</span>
                     </div>
-                    
-                    <p className="text-sm text-muted-foreground mb-2">{property.location}</p>
-                    
-                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                      <span>{property.beds} beds • {property.baths} baths • {property.guests} guests</span>
-                    </div>
-                    
+
+                    {/* Price */}
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-on-bg">
-                        €{property.priceFrom} night
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        €{property.priceFrom * 2} total
-                      </span>
+                      <div>
+                        <span className="text-sm text-on-bg/70">From</span>
+                        <div className="text-xl font-bold text-on-bg">${property.priceFrom}/night</div>
+                      </div>
+                      <Link
+                        href={property.href}
+                        className="text-primary hover:text-primary/80 font-medium"
+                      >
+                        View Details →
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -199,15 +209,13 @@ export default function PropertyGrid({
 
       {/* Pagination Dots */}
       {totalSlides > 1 && (
-        <div className="flex justify-center mt-6 space-x-2">
+        <div className="flex justify-center mt-8 gap-2">
           {Array.from({ length: totalSlides }, (_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
+              onClick={() => setCurrentSlide(index)}
               className={`w-2 h-2 rounded-full transition-colors ${
-                index === currentSlide 
-                  ? 'surface-primary' 
-                  : 'surface-muted hover:surface-primary/50'
+                index === currentSlide ? "surface-primary" : "surface-muted"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -217,11 +225,14 @@ export default function PropertyGrid({
 
       {/* Explore All Button */}
       {showExploreAll && (
-        <div className="text-center mt-8">
-          <button className="surface-primary text-on-primary px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity flex items-center space-x-2 mx-auto">
-            <span>Explore All</span>
-            <ChevronRight className="h-4 w-4" />
-          </button>
+        <div className="text-center mt-12">
+          <Link
+            href="/properties"
+            className="inline-flex items-center gap-2 px-6 py-3 surface-primary text-on-primary rounded-lg hover:surface-primary/90 transition-colors"
+          >
+            Explore All Properties
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       )}
     </div>

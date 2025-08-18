@@ -122,7 +122,7 @@ export const siteConfig: SiteConfig = siteConfigSchema.parse({
       { label: "Experiences", href: "/experiences" },
       { label: "Guides", href: "/guides" },
     ],
-    contact: { address: "Contact address placeholder", phone: "Contact phone placeholder", email: "Contact email placeholder" },
+    contact: { address: "123 Market Street, Suite 400, San Francisco, CA", phone: "+1 (555) 123-4567", email: "hello@example.com" },
     social: [
       { label: "Instagram", href: "#" },
       { label: "Facebook", href: "#" },
@@ -168,20 +168,52 @@ export const siteConfig: SiteConfig = siteConfigSchema.parse({
       experiencesHighlight: {
         heading: "Experiences highlight section heading placeholder",
         items: [
-          { title: "Experience card title placeholder", blurb: "Experience card blurb placeholder", imageAlt: "Experience image alt placeholder", href: "/experiences" },
+          { title: "Wine Tasting & Vineyard Tour", blurb: "Explore local vineyards and sample award-winning wines with expert sommeliers", imageAlt: "Wine tasting experience in vineyard", href: "/experiences" },
+          { title: "Private Chef Experience", blurb: "Enjoy a personalized dining experience with a private chef in your vacation home", imageAlt: "Private chef cooking in kitchen", href: "/experiences" },
+          { title: "Adventure Photography Workshop", blurb: "Capture stunning landscapes and memories with professional photography guidance", imageAlt: "Photography workshop in scenic location", href: "/experiences" },
         ],
       },
       features: {
-        heading: "Key features section heading placeholder",
+        heading: "Why Choose Us",
         items: [
-          { title: "Feature title placeholder", description: "Feature description placeholder", icon: "home" },
-          { title: "Feature title placeholder", description: "Feature description placeholder", icon: "wifi" },
+          { title: "Verified Properties", description: "All properties are thoroughly vetted and verified for quality and safety standards", icon: "shield" },
+          { title: "Premium Experience", description: "Enjoy luxury amenities and exceptional service at every property", icon: "star" },
+          { title: "Secure Booking", description: "Safe and secure payment processing with full booking protection", icon: "lock" },
+          { title: "Personalized Service", description: "Tailored recommendations and support throughout your stay", icon: "heart" },
         ],
       },
       bookDirect: { heading: "Why book direct section heading placeholder", bullets: ["Book direct benefit placeholder", "Exclusive perk placeholder"] },
       reviews: { heading: "Guest reviews section heading placeholder", items: [ { name: "Reviewer name placeholder", text: "Review text placeholder", rating: 5 } ] },
       guideTeaser: { heading: "Local guide teaser section heading placeholder", items: [ { title: "Guide teaser card title placeholder", href: "/guides", imageAlt: "Guide teaser image alt placeholder" } ] },
-      faq: { heading: "Homepage FAQ section heading placeholder", items: [ { q: "FAQ question placeholder", a: "FAQ answer placeholder" } ] },
+      faq: { 
+        heading: "Frequently Asked Questions", 
+        items: [
+          { 
+            q: "What is included in the cleaning service?", 
+            a: "Our comprehensive cleaning service includes dusting, vacuuming, mopping, bathroom sanitization, kitchen deep cleaning, fresh linens, and restocking of essential amenities. We also offer additional services like laundry and dishwashing upon request." 
+          },
+          { 
+            q: "How do I check in and check out?", 
+            a: "Check-in is available from 3 PM onwards with a seamless digital process. You'll receive detailed instructions and access codes 24 hours before arrival. Check-out is at 11 AM, and we offer flexible late check-out options when available." 
+          },
+          { 
+            q: "Are pets allowed in the properties?", 
+            a: "Many of our properties are pet-friendly with prior approval. We have a pet policy that includes a small additional fee and guidelines to ensure the comfort of all guests. Please contact us to confirm pet availability for your chosen property." 
+          },
+          { 
+            q: "What happens if I need to cancel my booking?", 
+            a: "We offer flexible cancellation policies that vary by property and booking type. Most bookings can be cancelled up to 7 days before arrival for a full refund. Please review the specific cancellation policy for your chosen property during booking." 
+          },
+          { 
+            q: "Is there 24/7 customer support available?", 
+            a: "Yes, our dedicated support team is available 24/7 to assist with any questions or issues. You can reach us via phone, email, or through our mobile app for immediate assistance during your stay." 
+          },
+          { 
+            q: "Do you offer long-term rental options?", 
+            a: "Absolutely! We offer extended stay options for guests staying 30 days or longer, with special rates and additional amenities. Our long-term rentals are perfect for business travelers, digital nomads, or those relocating to the area." 
+          }
+        ] 
+      },
       ownerTeaser: { heading: "Owner invitation teaser heading placeholder", blurb: "Owner invitation teaser blurb placeholder", cta: { label: "Request consultation", href: "/owner-services" } },
     },
     properties: {

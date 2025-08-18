@@ -1,12 +1,16 @@
 import { siteConfig } from "@/app/config/site-config";
 import Container from "@/components/ui/container";
 import Hero from "@/components/blocks/hero";
+import Reveal from "@/components/ui/reveal";
 import KeyValueStrip from "@/components/blocks/key-value-strip";
 import PropertyGrid from "@/components/blocks/property-grid";
-import FAQAccordion from "@/components/blocks/faq-accordion";
+import ExperiencesHighlight from "@/components/blocks/experiences-highlight";
+import FeaturesHighlight from "@/components/blocks/features-highlight";
+import Reviews from "@/components/blocks/reviews";
+import LatestStories from "@/components/blocks/latest-stories";
+import FAQ from "@/components/blocks/faq";
 import Button from "@/components/ui/button";
 import Card from "@/components/ui/card";
-import { Star, Home, Wifi } from "lucide-react";
 
 export default function HomePage() {
   const home = siteConfig.pages.home;
@@ -14,96 +18,48 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <KeyValueStrip />
+      <Reveal>
+        <KeyValueStrip />
+      </Reveal>
       
       {/* Featured Properties */}
-      <section className="surface-muted text-on-muted py-12">
-        <Container>
-          <PropertyGrid 
-            properties={home.featuredProperties.items}
-            title="Most Loved Properties"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing"
-            showExploreAll={true}
-          />
-        </Container>
-      </section>
+      <Reveal>
+        <section className="surface-muted text-on-muted py-12">
+          <Container width="wide">
+            <PropertyGrid 
+              items={home.featuredProperties.items}
+              title="Most Loved Properties"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing"
+              showExploreAll={true}
+            />
+          </Container>
+        </section>
+      </Reveal>
 
       {/* Experiences Highlight */}
-      <section className="surface-bg text-on-bg py-12">
-        <Container>
-          <h2 className="text-3xl font-heading mb-8 text-on-bg">{home.experiencesHighlight.heading}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {home.experiencesHighlight.items.map((item, index) => (
-              <Card key={index} className="text-center surface-bg">
-                <div className="h-32 surface-muted rounded-lg mb-4" />
-                <h3 className="font-medium mb-2 text-on-bg">{item.title}</h3>
-                <p className="text-sm text-on-bg mb-4">{item.blurb}</p>
-                <Button href={item.href} variant="secondary">Learn More</Button>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <Reveal>
+        <ExperiencesHighlight />
+      </Reveal>
 
-      {/* Features */}
-      <section className="surface-muted text-on-muted py-12">
-        <Container>
-          <h2 className="text-3xl font-heading mb-8 text-on-muted">{home.features.heading}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {home.features.items.map((feature, index) => {
-              const Icon = feature.icon === "home" ? Home : Wifi;
-              return (
-                <Card key={index} className="text-center surface-bg">
-                  <div className="flex justify-center mb-4">
-                    <Icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="font-medium mb-2 text-on-bg">{feature.title}</h3>
-                  <p className="text-sm text-on-bg">{feature.description}</p>
-                </Card>
-              );
-            })}
-          </div>
-        </Container>
-      </section>
+      {/* Features Highlight */}
+      <Reveal>
+        <FeaturesHighlight />
+      </Reveal>
 
       {/* Reviews */}
-      <section className="surface-muted text-on-muted py-12">
-        <Container>
-          <h2 className="text-3xl font-heading mb-8 text-on-muted">{home.reviews.heading}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {home.reviews.items.map((review, index) => (
-              <Card key={index} className="surface-bg">
-                <div className="flex items-center gap-1 mb-3">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-on-bg mb-3">"{review.text}"</p>
-                <p className="font-medium text-on-bg">{review.name}</p>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <Reveal>
+        <Reviews />
+      </Reveal>
 
-      {/* Guide Teaser */}
-      <section className="surface-bg text-on-bg py-12">
-        <Container>
-          <h2 className="text-3xl font-heading mb-8 text-on-bg">{home.guideTeaser.heading}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {home.guideTeaser.items.map((item, index) => (
-              <Card key={index} className="text-center surface-bg">
-                <div className="h-32 surface-muted rounded-lg mb-4" />
-                <h3 className="font-medium mb-4 text-on-bg">{item.title}</h3>
-                <Button href={item.href} variant="secondary">Read Guide</Button>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
+      {/* Latest Stories (Blog & Guides) */}
+      <Reveal>
+        <LatestStories />
+      </Reveal>
 
       {/* FAQ */}
-      <FAQAccordion path="home" />
+      <Reveal>
+        <FAQ />
+      </Reveal>
 
       {/* Owner Teaser */}
       <section className="surface-primary text-on-primary py-12">

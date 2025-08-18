@@ -5,7 +5,7 @@ import Button from "@/components/ui/button";
 
 export default function Footer() {
   return (
-    <footer className="surface-muted text-on-muted border-t border-border">
+    <footer className="surface-primary text-on-primary border-t border-primary/20">
       <Container>
         <div className="py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -14,12 +14,16 @@ export default function Footer() {
               <h3 className="text-lg font-heading font-bold text-primary mb-4">
                 {siteConfig.brand.name}
               </h3>
-              <p className="text-sm text-on-muted mb-6">
-                {siteConfig.brand.tagline}
+              <p className="text-sm text-on-primary/80 mb-6">
+                {siteConfig.brand.name}
               </p>
               {/* List Your Property CTA */}
               <div className="mb-6">
-                <Button href="/owner-services" className="w-full md:w-auto">
+                <Button 
+                  href="/owner-services" 
+                  variant="secondary"
+                  className="w-full md:w-auto surface-bg text-on-bg hover:surface-bg/90"
+                >
                   List Your Property
                 </Button>
               </div>
@@ -27,13 +31,13 @@ export default function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-medium mb-4 text-on-muted">Quick Links</h4>
+              <h4 className="font-medium mb-4 text-on-primary">Quick Links</h4>
               <ul className="space-y-2">
                 {siteConfig.footer.quickLinks.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-on-muted hover:text-primary transition-colors"
+                      className="text-sm text-on-primary/80 hover:text-on-primary transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -44,8 +48,8 @@ export default function Footer() {
 
             {/* Contact */}
             <div>
-              <h4 className="font-medium mb-4 text-on-muted">Contact</h4>
-              <div className="space-y-2 text-sm text-on-muted">
+              <h4 className="font-medium mb-4 text-on-primary">Contact</h4>
+              <div className="space-y-2 text-sm text-on-primary/80">
                 <p>{siteConfig.footer.contact.address}</p>
                 <p>{siteConfig.footer.contact.phone}</p>
                 <p>{siteConfig.footer.contact.email}</p>
@@ -54,13 +58,13 @@ export default function Footer() {
 
             {/* Legal */}
             <div>
-              <h4 className="font-medium mb-4 text-on-muted">Legal</h4>
+              <h4 className="font-medium mb-4 text-on-primary/70">Legal</h4>
               <ul className="space-y-2">
                 {siteConfig.footer.legal.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-on-muted hover:text-primary transition-colors"
+                      className="text-xs text-on-primary/60 hover:text-on-primary/80 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -70,7 +74,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-border text-center text-sm text-on-muted">
+          <div className="mt-8 pt-8 border-t border-primary/20 text-center text-sm text-on-primary/80">
             <p>&copy; 2024 {siteConfig.brand.name}. All rights reserved.</p>
           </div>
         </div>

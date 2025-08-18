@@ -20,13 +20,13 @@ export default function Button({
   type = "button",
   onClick 
 }: ButtonProps) {
-  const baseClasses = "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
+  const baseClasses = "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 rounded-md";
   
   const variants = {
     default: "surface-primary text-on-primary hover:opacity-90",
     secondary: "surface-secondary text-on-secondary hover:opacity-90",
-    outline: "border border-border surface-bg text-on-bg hover:surface-muted",
-    ghost: "surface-bg text-on-bg hover:surface-muted",
+    outline: "border border-border surface-bg text-on-bg hover:bg-gray-50",
+    ghost: "surface-bg text-on-bg hover:bg-gray-50",
   };
   
   const sizes = {
@@ -39,7 +39,7 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} style={{ textDecoration: 'none' }}>
         {children}
       </Link>
     );

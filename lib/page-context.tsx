@@ -11,7 +11,7 @@ const PageContext = createContext<PageContextType>({ isHomePage: false });
 
 export function PageProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [isHomePage, setIsHomePage] = useState(false);
+  const [isHomePage, setIsHomePage] = useState(pathname === "/");
 
   useEffect(() => {
     setIsHomePage(pathname === "/");

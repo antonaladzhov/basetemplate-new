@@ -4,13 +4,15 @@ import Link from "next/link";
 import { siteConfig } from "@/app/config/site-config";
 import Container from "@/components/ui/container";
 import Button from "@/components/ui/button";
-import { Menu, ChevronDown, Globe } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, ChevronDown, Globe } from "lucide-react";
+import { useState, useEffect } from "react";
 import { usePage } from "@/lib/page-context";
 
 export default function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [isScrolled, setIsScrolled] = useState(false);
   const { isHomePage } = usePage();
 
   const languages = [
@@ -26,13 +28,31 @@ export default function Header() {
     setIsLanguageOpen(false);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Hide header on homepage since hero has integrated navbar
   if (isHomePage) {
     return null;
   }
 
   return (
-    <header className="surface-bg text-on-bg border-b border-border">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'surface-bg text-on-bg border-b border-border shadow-sm' 
+        : 'bg-transparent text-on-bg'
+    }`}>
       <Container>
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Language Switcher */}
@@ -45,7 +65,11 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                className="flex items-center space-x-1 px-2 py-1 text-sm font-medium text-on-bg hover:text-primary transition-colors border border-border rounded-md hover:border-primary"
+                className={`flex items-center space-x-1 px-2 py-1 text-sm font-medium transition-colors border rounded-md ${
+                  isScrolled
+                    ? 'text-on-bg hover:text-primary border-border hover:border-primary'
+                    : 'text-on-bg hover:text-on-bg/80 border-white/30 hover:border-white/50'
+                }`}
               >
                 <Globe className="h-3 w-3" />
                 <span>{currentLanguage.toUpperCase()}</span>
@@ -76,7 +100,11 @@ export default function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-base font-medium text-on-bg hover:text-primary transition-colors"
+                className={`text-base font-medium transition-colors ${
+                  isScrolled
+                    ? 'text-on-bg hover:text-primary'
+                    : 'text-on-bg hover:text-on-bg/80'
+                }`}
               >
                 {item.label}
               </Link>
@@ -87,7 +115,11 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <a 
               href="tel:+1-555-123-4567" 
-              className="text-sm font-medium text-on-bg hover:text-primary transition-colors"
+              className={`text-sm font-medium transition-colors ${
+                isScrolled
+                  ? 'text-on-bg hover:text-primary'
+                  : 'text-on-bg hover:text-on-bg/80'
+              }`}
             >
               +1 (555) 123-4567
             </a>
@@ -97,11 +129,55 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <button className="md:hidden p-2" aria-label="Mobile menu toggle">
-            <Menu className="h-6 w-6" />
+          <button 
+            className="md:hidden p-2" 
+            aria-label="Mobile menu toggle"
+            onClick={toggleMobileMenu}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
       </Container>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 surface-bg border-b border-border shadow-lg z-50">
+          <Container>
+            <div className="py-4 space-y-4">
+              {/* Mobile Navigation */}
+              <nav className="space-y-2">
+                {siteConfig.nav.main.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="block py-2 text-base font-medium text-on-bg hover:text-primary transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+
+              {/* Mobile Contact & CTA */}
+              <div className="pt-4 border-t border-border space-y-3">
+                <a 
+                  href="tel:+1-555-123-4567" 
+                  className="block text-sm font-medium text-on-bg hover:text-primary transition-colors"
+                >
+                  +1 (555) 123-4567
+                </a>
+                <Button href={siteConfig.nav.ctas.primary.href} className="w-full">
+                  {siteConfig.nav.ctas.primary.label}
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </div>
+      )}
     </header>
   );
 }

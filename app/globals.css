@@ -29,6 +29,37 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-background);
   color: var(--color-text);
+  overflow-x: hidden;
+}
+
+/* Add padding for fixed header on interior pages */
+body:not(.homepage) {
+  padding-top: 4rem; /* 64px to match header height */
+}
+
+/* Slide-down animation for sticky headers/navbars */
+.slide-down-enter {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.slide-down-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+
+/* Utility classes for reveal starting states (used by Reveal component as fallback) */
+.reveal-hidden { opacity: 0; transform: translateY(8px); }
+.reveal-show { opacity: 1; transform: translateY(0); transition: all 700ms ease-out; }
+
+/* Global link hover behavior */
+a {
+  text-decoration: none;
+  transition: color 200ms ease, text-decoration-color 200ms ease, opacity 200ms ease, background-color 200ms ease;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Surface + text pairs */
