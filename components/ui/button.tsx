@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface ButtonProps {
   children: React.ReactNode;
   href?: string;
-  variant?: "default" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "accent" | "outline" | "ghost" | "destructive";
   size?: "sm" | "md" | "lg";
   className?: string;
   type?: "button" | "submit" | "reset";
@@ -14,39 +14,29 @@ interface ButtonProps {
 export default function Button({ 
   children, 
   href, 
-  variant = "default", 
+  variant = "primary", 
   size = "md", 
   className,
   type = "button",
   onClick 
 }: ButtonProps) {
-  const baseClasses = "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 rounded-md";
-  
-  const variants = {
-    default: "surface-primary text-on-primary hover:opacity-90",
-    secondary: "surface-secondary text-on-secondary hover:opacity-90",
-    outline: "border border-border surface-bg text-on-bg hover:bg-gray-50",
-    ghost: "surface-bg text-on-bg hover:bg-gray-50",
-  };
-  
-  const sizes = {
-    sm: "h-8 px-3 text-sm",
-    md: "h-10 px-4 py-2",
-    lg: "h-12 px-8 text-lg",
-  };
-
-  const classes = cn(baseClasses, variants[variant], sizes[size], className);
+  const buttonClasses = cn(
+    "btn",
+    `btn-${variant}`,
+    size !== "md" && `btn-${size}`,
+    className
+  );
 
   if (href) {
     return (
-      <Link href={href} className={classes} style={{ textDecoration: 'none' }}>
+      <Link href={href} className={buttonClasses}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button type={type} className={buttonClasses} onClick={onClick}>
       {children}
     </button>
   );

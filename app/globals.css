@@ -1,20 +1,35 @@
+/* Import our CSS architecture */
+@import "./config/primitives.css";
+@import "./config/semantics.css";
+@import "./config/components.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Tailwind v4 font mapping (assumes next/font sets --font-* variables in layout.tsx) */
-@theme inline {
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-roboto-mono);
+/* ==========================================================================
+   GLOBAL OVERRIDES AND ADDITIONS
+   ========================================================================== */
+
+/* Reset and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* Base document colors from semantic tokens */
-html, body {
-  background: var(--background);
-  color: var(--foreground);
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: hsl(var(--color-text));
+  background-color: hsl(var(--color-background));
   overflow-x: hidden;
 }
 
@@ -41,34 +56,89 @@ body:not(.homepage) {
 /* Global link hover behavior */
 a {
   text-decoration: none;
-  transition: color 200ms ease, text-decoration-color 200ms ease, opacity 200ms ease, background-color 200ms ease;
+  transition: var(--transition-smooth);
+  color: hsl(var(--color-primary));
 }
 a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+  color: hsl(var(--color-primary-glow));
 }
 
-/* Surface + text pairs using semantic tokens */
-.text-on-bg        { color: var(--foreground); }
-.text-on-muted     { color: var(--foreground); }
-.text-on-primary   { color: var(--primary-foreground); }
-.text-on-secondary { color: var(--secondary-foreground); }
-.text-on-inverse   { color: var(--background); }
+/* Surface + text pairs */
+.text-on-bg        { color: hsl(var(--color-text)); }
+.text-on-muted     { color: hsl(var(--color-text)); }
+.text-on-primary   { color: hsl(var(--color-primary-foreground)); }
+.text-on-secondary { color: hsl(var(--color-secondary-foreground)); }
+.text-on-accent    { color: hsl(var(--color-accent-foreground)); }
+.text-on-inverse   { color: #FFFFFF; }
 
-.surface-bg        { background: var(--background); }
-.surface-muted     { background: var(--muted); }
-.surface-primary   { background: var(--primary); }
-.surface-secondary { background: var(--secondary); }
+.surface-bg        { background: hsl(var(--color-background)); }
+.surface-muted     { background: hsl(var(--color-muted)); }
+.surface-primary   { background: hsl(var(--color-primary)); }
+.surface-secondary { background: hsl(var(--color-secondary)); }
+.surface-accent    { background: hsl(var(--color-accent)); }
 
 /* Image/Video sections: add a scrim to guarantee AA contrast for light text */
 .surface-image {
   position: relative;
-  color: var(--background); /* pairs with the scrim */
+  color: #FFFFFF; /* pairs with the scrim */
 }
 .surface-image::before {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+  background: var(--gradient-overlay);
   pointer-events: none;
 }
 .surface-image > * { position: relative; }
+
+/* Typography base styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  color: hsl(var(--color-text));
+}
+
+h1 { font-size: var(--text-4xl); font-weight: var(--font-bold); }
+h2 { font-size: var(--text-3xl); font-weight: var(--font-semibold); }
+h3 { font-size: var(--text-2xl); font-weight: var(--font-semibold); }
+h4 { font-size: var(--text-xl); font-weight: var(--font-medium); }
+h5 { font-size: var(--text-lg); font-weight: var(--font-medium); }
+h6 { font-size: var(--text-base); font-weight: var(--font-medium); }
+
+p {
+  font-family: var(--font-body);
+  line-height: var(--leading-relaxed);
+  color: hsl(var(--color-text));
+}
+
+/* Focus styles for better accessibility */
+*:focus-visible {
+  outline: 2px solid hsl(var(--color-ring));
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: hsl(var(--color-primary) / 0.2);
+  color: hsl(var(--color-text));
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--color-muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-neutral-300));
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--color-neutral-400));
+}

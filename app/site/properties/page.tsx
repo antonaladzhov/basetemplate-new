@@ -5,13 +5,12 @@ import { siteConfig } from "@/app/config/site-config";
 import Container from "@/components/ui/container";
 import PropertyFilters from "@/components/blocks/property-filters";
 import Select from "@/components/ui/select";
-import { siteConfig as config } from "@/app/config/site-config";
 import PropertyCard from "@/components/blocks/property-card";
 import Button from "@/components/ui/button";
 import Reveal from "@/components/ui/reveal";
 
 export default function PropertiesPage() {
-  const properties = config.pages.home.featuredProperties.items;
+  const properties = siteConfig.pages.home.featuredProperties.items;
   const [showMapMobile, setShowMapMobile] = useState(false);
 
   return (
@@ -38,7 +37,7 @@ export default function PropertiesPage() {
               {/* Left: Filters + List (scrollable) */}
               <div className="lg:col-span-7">
                 {/* Filters and Sort */}
-                <div className="py-4 border-b border-border sticky top-0 bg-[var(--background)] z-10">
+                <div className="py-4 border-b border-border sticky top-0 bg-white z-10">
                   <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                     <PropertyFilters />
                     <div className="flex items-center gap-2">
@@ -88,15 +87,15 @@ export default function PropertiesPage() {
 
           {/* Mobile sticky show map button */}
           <div className="lg:hidden fixed bottom-4 inset-x-4 flex justify-center z-40">
-            <Button onClick={() => setShowMapMobile(true)} className="bg-[var(--background)] text-[var(--foreground)] border border-border shadow-lg rounded-full px-6 py-3">
+            <Button onClick={() => setShowMapMobile(true)} className="bg-white text-neutral-900 border border-border shadow-lg rounded-full px-6 py-3">
               Show map
             </Button>
           </div>
 
           {/* Mobile full-screen map overlay */}
           {showMapMobile && (
-            <div className="fixed inset-0 z-50 bg-[var(--background)]">
-<div className="h-14 flex items-center justify-between px-4 border-b border-border bg-[var(--background)]">
+            <div className="fixed inset-0 z-50 bg-white">
+              <div className="h-14 flex items-center justify-between px-4 border-b border-border bg-white">
                 <span className="font-medium text-lg">Map</span>
                 <Button onClick={() => setShowMapMobile(false)} variant="outline" className="rounded-full">
                   Hide map

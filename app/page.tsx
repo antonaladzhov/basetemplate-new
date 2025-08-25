@@ -28,8 +28,8 @@ export default function HomePage() {
           <Container width="wide">
             <PropertyGrid 
               items={home.featuredProperties.items}
-              title="Most Loved Properties"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing"
+              title={home.featuredProperties.title}
+              description={home.featuredProperties.description}
               showExploreAll={true}
             />
           </Container>
@@ -70,17 +70,6 @@ export default function HomePage() {
             <Button href={home.ownerTeaser.cta.href} variant="secondary">
               {home.ownerTeaser.cta.label}
             </Button>
-          </div>
-        </Container>
-      </section>
-
-      {/* Test Button for Theming System */}
-      <section className="py-8">
-        <Container>
-          <div className="text-center">
-            <button className="bg-[var(--primary)] text-[var(--primary-foreground)] px-4 py-2 rounded-[var(--radius)]">
-              Test Semantic Theming
-            </button>
           </div>
         </Container>
       </section>

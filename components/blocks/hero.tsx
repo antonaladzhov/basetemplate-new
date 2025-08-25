@@ -144,7 +144,7 @@ export default function Hero() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--foreground)]/90 backdrop-blur-sm border-b border-[var(--background)]/20 z-50">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-sm border-b border-white/20 z-50">
             <Container>
               <div className="py-4 space-y-4">
                 {/* Mobile Navigation */}
@@ -190,6 +190,8 @@ export default function Hero() {
             height={900}
             className="w-full h-full object-cover"
           />
+          {/* Darker overlay */}
+          <div className="absolute inset-0 bg-black/40"></div>
         </div>
         
         {/* Content with scrim */}
@@ -206,7 +208,7 @@ export default function Hero() {
                 </p>
                 
                 {/* Search Component */}
-                <div className="bg-[var(--background)] rounded-lg shadow-xl p-4 md:p-6 max-w-4xl mx-auto">
+                <div className="bg-white rounded-lg shadow-xl p-4 md:p-6 max-w-4xl mx-auto">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-muted-foreground" />

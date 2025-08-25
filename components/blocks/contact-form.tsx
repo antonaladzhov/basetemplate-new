@@ -29,6 +29,8 @@ export default function ContactForm() {
     console.log("Form submitted:", formData);
   };
 
+  const formConfig = siteConfig.pages.contact.form;
+
   return (
     <section className="surface-bg text-on-bg py-16">
       <Container>
@@ -41,12 +43,12 @@ export default function ContactForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-on-bg">
-                  Name
+                  {formConfig.nameLabel}
                 </label>
                 <Input
                   type="text"
                   name="name"
-                  placeholder="Your name"
+                  placeholder={formConfig.namePlaceholder}
                   value={formData.name}
                   onChange={handleChange}
                 />
@@ -54,12 +56,12 @@ export default function ContactForm() {
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2 text-on-bg">
-                  Email
+                  {formConfig.emailLabel}
                 </label>
                 <Input
                   type="email"
                   name="email"
-                  placeholder="your.email@example.com"
+                  placeholder={formConfig.emailPlaceholder}
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -68,12 +70,12 @@ export default function ContactForm() {
             
             <div>
               <label htmlFor="phone" className="block text-sm font-medium mb-2 text-on-bg">
-                Phone
+                {formConfig.phoneLabel}
               </label>
               <Input
                 type="tel"
                 name="phone"
-                placeholder="Your phone number"
+                placeholder={formConfig.phonePlaceholder}
                 value={formData.phone}
                 onChange={handleChange}
               />
@@ -81,18 +83,18 @@ export default function ContactForm() {
             
             <div>
               <label htmlFor="message" className="block text-sm font-medium mb-2 text-on-bg">
-                Message
+                {formConfig.messageLabel}
               </label>
               <Textarea
                 name="message"
-                placeholder="Your message"
+                placeholder={formConfig.messagePlaceholder}
                 value={formData.message}
                 onChange={handleChange}
               />
             </div>
             
             <Button type="submit" className="w-full">
-              Send Message
+              {formConfig.submitLabel}
             </Button>
           </form>
         </div>

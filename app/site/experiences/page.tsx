@@ -15,34 +15,34 @@ export default function ExperiencesPage() {
   // Experience data by category
   const experiencesByCategory = {
     beach: [
-      { title: "Sunset Sail", blurb: "Private catamaran with onboard drinks", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Hidden Coves", blurb: "Boat tour to secluded beaches", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Coastal E-Bikes", blurb: "Guided ride along the shoreline", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Sunset Sail", blurb: "Private catamaran with onboard drinks", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Hidden Coves", blurb: "Boat tour to secluded beaches", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Coastal E-Bikes", blurb: "Guided ride along the shoreline", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
     ],
     mountain: [
-      { title: "Summit Hike", blurb: "Guided trek with panoramic views", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Alpine Picnic", blurb: "Private chef lunch at lookout point", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Stargazing", blurb: "Night sky session with telescope", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Summit Hike", blurb: "Guided trek with panoramic views", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Alpine Picnic", blurb: "Private chef lunch at lookout point", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Stargazing", blurb: "Night sky session with telescope", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
     ],
     city: [
-      { title: "Architecture Walk", blurb: "Design highlights with local guide", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Street Art Tour", blurb: "Murals and hidden ateliers", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Rooftop Mixology", blurb: "Cocktail class at sunset", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Architecture Walk", blurb: "Design highlights with local guide", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Street Art Tour", blurb: "Murals and hidden ateliers", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Rooftop Mixology", blurb: "Cocktail class at sunset", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
     ],
     food: [
-      { title: "Chef's Table", blurb: "Multi-course tasting in-villa", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Vineyard Tour", blurb: "Private tastings with sommelier", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Market to Table", blurb: "Shop, cook, and dine with a chef", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Chef's Table", blurb: "Multi-course tasting in-villa", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Vineyard Tour", blurb: "Private tastings with sommelier", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Market to Table", blurb: "Shop, cook, and dine with a chef", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
     ],
     water: [
-      { title: "Kayak & Caves", blurb: "Explore sea caves with a guide", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Dive Intro", blurb: "Beginner-friendly reef dive", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Paddle at Dawn", blurb: "Serene sunrise SUP session", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Kayak & Caves", blurb: "Explore sea caves with a guide", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Dive Intro", blurb: "Beginner-friendly reef dive", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Paddle at Dawn", blurb: "Serene sunrise SUP session", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
     ],
     cultural: [
-      { title: "Old Town Stories", blurb: "History walk with local expert", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Gallery Hopping", blurb: "Curated contemporary art trail", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
-      { title: "Craft Workshop", blurb: "Hands-on ceramics or textiles", href: "/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Old Town Stories", blurb: "History walk with local expert", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Gallery Hopping", blurb: "Curated contemporary art trail", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
+      { title: "Craft Workshop", blurb: "Hands-on ceramics or textiles", href: "/site/experiences", image: "/images/placeholders/placeholder-800x600.svg" },
     ],
   };
 
@@ -77,7 +77,7 @@ export default function ExperiencesPage() {
                 <p className="text-lg md:text-xl text-on-inverse/90 mb-8">
                   {siteConfig.pages.experiences.hero.subhead}
                 </p>
-                <Button href="/contact" variant="secondary">
+                <Button href="/site/contact" variant="secondary">
                   Plan Your Experience
                 </Button>
               </div>

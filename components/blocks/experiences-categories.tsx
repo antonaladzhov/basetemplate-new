@@ -6,9 +6,9 @@ export default function ExperiencesCategories() {
   return (
     <div className="flex flex-wrap gap-3">
       {siteConfig.pages.experiences.categories.map((category) => (
-        <Link key={category.label} href={category.href}>
+        <Link key={category.key} href={category.href}>
           <Badge className="hover:bg-primary hover:text-primaryFg transition-colors cursor-pointer">
-            {category.label}
+            {category.name}
           </Badge>
         </Link>
       ))}
