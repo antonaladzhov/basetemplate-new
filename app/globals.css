@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import '../config/tokens.css';
-@import '../config/theme.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Tailwind v4 font mapping (assumes next/font sets --font-* variables in layout.tsx) */
 @theme inline {

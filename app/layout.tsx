@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import "@/app/config/tokens.css";
+import "@/app/config/theme.css";
 import { PageProvider } from "@/lib/page-context";
 import Header from "@/components/blocks/header";
 import BodyClass from "@/components/ui/body-class";
