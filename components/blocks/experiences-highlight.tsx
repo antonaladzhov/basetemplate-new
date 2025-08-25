@@ -105,11 +105,11 @@ export default function ExperiencesHighlight({ heading, showFooter = true }: Exp
                           className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
                         />
                         {/* Dark overlay for text readability */}
-                        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-[var(--foreground)]/30 group-hover:bg-[var(--foreground)]/40 transition-colors duration-300" />
                       </div>
 
                       {/* Content Overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-[var(--background)]">
                         <h3 className="text-xl font-bold mb-2">{experience.title}</h3>
                         <p className="text-sm opacity-90 mb-3">{experience.blurb}</p>
                         <div className="flex items-center text-sm opacity-75">

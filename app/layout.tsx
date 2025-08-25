@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { PageProvider } from "@/lib/page-context";
 import Header from "@/components/blocks/header";
 import BodyClass from "@/components/ui/body-class";
 import Footer from "@/components/blocks/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"], 
+  display: "swap", 
+  variable: "--font-inter" 
+});
+
+const mono = Roboto_Mono({ 
+  subsets: ["latin"], 
+  display: "swap", 
+  variable: "--font-roboto-mono" 
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${inter.variable} ${mono.variable} antialiased`}>
+      <body className="font-sans">
         <PageProvider>
           <BodyClass />
           <Header />

@@ -73,7 +73,7 @@ export default function ExperiencesPage() {
 
         {/* Scrim + Content */}
         <div className="relative w-full">
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-[var(--foreground)]/40" />
           <Container>
             <div className="py-16 md:py-24 lg:py-32 relative">
               <h1 className="text-4xl md:text-5xl font-heading mb-4 text-on-inverse">
@@ -109,8 +109,8 @@ export default function ExperiencesPage() {
                 onClick={() => setActiveCategory(cat.key)}
                 className={`px-3 md:px-4 py-2 rounded-full border transition-colors text-sm md:text-base whitespace-nowrap ${
                   activeCategory === cat.key
-                    ? "bg-neutral-900 text-white border-neutral-900"
-                    : "bg-white text-neutral-900 border-border hover:bg-gray-50"
+                    ? "bg-[var(--primary)] text-[var(--primary-foreground)] border-[var(--primary)]"
+: "bg-[var(--background)] text-[var(--foreground)] border-border hover:bg-[var(--muted)]"
                 }`}
                 aria-pressed={activeCategory === cat.key}
               >
@@ -130,7 +130,7 @@ export default function ExperiencesPage() {
                       alt={exp.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-black/10" />
+                    <div className="absolute inset-0 bg-[var(--foreground)]/10" />
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-on-bg">{exp.title}</h3>
@@ -167,11 +167,11 @@ export default function ExperiencesPage() {
       </Reveal>
 
       {/* CTA */}
-      <section className="py-12 bg-neutral-900 text-white">
+      <section className="py-12 bg-[var(--primary)] text-[var(--primary-foreground)]">
         <Container>
           <div className="text-center">
-            <h2 className="text-2xl font-heading mb-4 text-white">Need a custom experience?</h2>
-            <p className="text-white/80 mb-6">Our concierge team can help you plan the perfect adventure.</p>
+            <h2 className="text-2xl font-heading mb-4 text-[var(--primary-foreground)]">Need a custom experience?</h2>
+            <p className="text-[var(--primary-foreground)]/80 mb-6">Our concierge team can help you plan the perfect adventure.</p>
             <Button href={siteConfig.pages.experiences.cta.href} variant="secondary">
               {siteConfig.pages.experiences.cta.label}
             </Button>

@@ -47,11 +47,11 @@ export default function LatestStories() {
       <Container>
         <Reveal>
           <div className="mb-10 flex items-center justify-between">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">Latest stories</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-[var(--background)]">Latest stories</h2>
             <Button
               href="/guides"
               variant="outline"
-              className="bg-white text-neutral-900 border-white hover:bg-white/90"
+              className="bg-[var(--background)] text-[var(--foreground)] border-[var(--background)] hover:bg-[var(--background)]/90"
             >
               See All Posts
             </Button>
@@ -74,14 +74,14 @@ export default function LatestStories() {
                   </div>
 
                   <div className="pt-6">
-                    <p className="text-xs tracking-wider uppercase text-white/60">{post.date}</p>
-                    <h3 className="mt-3 text-2xl font-semibold text-white group-hover:text-white/90 transition-colors">
+                    <p className="text-xs tracking-wider uppercase text-[var(--background)]/60">{post.date}</p>
+                    <h3 className="mt-3 text-2xl font-semibold text-[var(--background)] group-hover:text-[var(--background)]/90 transition-colors">
                       {post.title}
                     </h3>
-                    <p className="mt-4 text-white/70">
+                    <p className="mt-4 text-[var(--background)]/70">
                       {post.excerpt}
                     </p>
-                    <span className="mt-6 inline-flex items-center text-white font-medium group-hover:underline transition-all">
+                    <span className="mt-6 inline-flex items-center text-[var(--background)] font-medium group-hover:underline transition-all">
                       Read More →
                     </span>
                   </div>

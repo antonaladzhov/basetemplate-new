@@ -73,6 +73,17 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      {/* Test Button for Theming System */}
+      <section className="py-8">
+        <Container>
+          <div className="text-center">
+            <button className="bg-[var(--primary)] text-[var(--primary-foreground)] px-4 py-2 rounded-[var(--radius)]">
+              Test Semantic Theming
+            </button>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

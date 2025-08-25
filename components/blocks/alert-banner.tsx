@@ -15,10 +15,10 @@ export default function AlertBanner({ message, variant = "info", dismissible = t
   if (!isVisible) return null;
 
   const variants = {
-    info: "bg-accent text-white",
-    warning: "bg-warning text-white",
-    success: "bg-success text-white",
-    error: "bg-danger text-white",
+    info: "bg-[var(--accent)] text-[var(--accent-foreground)]",
+warning: "bg-[var(--destructive)] text-[var(--destructive-foreground)]",
+success: "bg-[var(--accent)] text-[var(--accent-foreground)]",
+error: "bg-[var(--destructive)] text-[var(--destructive-foreground)]",
   };
 
   return (
@@ -28,7 +28,7 @@ export default function AlertBanner({ message, variant = "info", dismissible = t
         {dismissible && (
           <button
             onClick={() => setIsVisible(false)}
-            className="ml-4 p-1 hover:bg-white/20 rounded"
+            className="ml-4 p-1 hover:bg-[var(--background)]/20 rounded"
             aria-label="Dismiss alert"
           >
             <X className="h-4 w-4" />

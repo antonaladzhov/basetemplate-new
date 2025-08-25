@@ -9,9 +9,9 @@ interface BadgeProps {
 export default function Badge({ children, variant = "default", className }: BadgeProps) {
   const variants = {
     default: "bg-muted text-text",
-    success: "bg-success text-white",
-    warning: "bg-warning text-white",
-    danger: "bg-danger text-white"
+    success: "bg-[var(--accent)] text-[var(--accent-foreground)]",
+warning: "bg-[var(--destructive)] text-[var(--destructive-foreground)]",
+danger: "bg-[var(--destructive)] text-[var(--destructive-foreground)]"
   };
 
   return (

@@ -46,14 +46,14 @@ export default function ImageGallery({ images = [], className = "" }: ImageGalle
         <>
           <button
             onClick={prevImage}
-            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70 transition-colors"
+            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-[var(--foreground)]/50 p-2 text-[var(--background)] hover:bg-[var(--foreground)]/70 transition-colors"
             aria-label="Previous image"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             onClick={nextImage}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70 transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[var(--foreground)]/50 p-2 text-[var(--background)] hover:bg-[var(--foreground)]/70 transition-colors"
             aria-label="Next image"
           >
             <ChevronRight className="h-5 w-5" />

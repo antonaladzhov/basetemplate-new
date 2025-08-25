@@ -53,7 +53,7 @@ export default function FeaturesHighlight() {
       {/* Background Bar - Short Height, Dark so light text has contrast */}
       <div className="relative h-64 bg-neutral-900">
         {/* Content on Background */}
-        <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-4">
+        <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-[var(--background)] px-4">
           <h2 className="text-4xl font-bold mb-4">Amenities You&apos;ll Love</h2>
           <p className="text-xl max-w-2xl">
             Enjoy a wide array of top-rated amenities designed with your comfort in mind:
@@ -65,7 +65,7 @@ export default function FeaturesHighlight() {
       <div className="relative -mt-16 px-4">
         <Container>
           <Reveal>
-            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+            <div className="bg-[var(--background)] rounded-2xl shadow-2xl p-8 md:p-12">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {features.map((feature, index) => (
                   <Reveal key={index}>

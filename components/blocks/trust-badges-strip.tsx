@@ -10,7 +10,7 @@ export default function TrustBadgesStrip() {
   ];
 
   return (
-    <section className="py-8 bg-white border-t border-border">
+    <section className="py-8 bg-[var(--background)] border-t border-border">
       <Container>
         <div className="flex justify-center items-center gap-8">
           {badges.map((badge, index) => {

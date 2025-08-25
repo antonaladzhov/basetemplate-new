@@ -1,34 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import '../config/tokens.css';
+@import '../config/theme.css';
 
-:root {
-  --color-primary: #100F12;
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: #6B7280;
-  --color-secondary-foreground: #FFFFFF;
-  --color-muted: #F3F4F6;
-  --color-muted-foreground: #6B7280;
-  --color-accent: #E5E7EB;
-  --color-accent-foreground: #374151;
-  --color-destructive: #EF4444;
-  --color-destructive-foreground: #FFFFFF;
-  --color-border: #D1D5DB;
-  --color-input: #D1D5DB;
-  --color-ring: #100F12;
-  --color-background: #FFFFFF;
-  --color-foreground: #100F12;
-  --color-card: #FFFFFF;
-  --color-card-foreground: #100F12;
-  --color-popover: #FFFFFF;
-  --color-popover-foreground: #100F12;
-  --color-text: #100F12;
+/* Tailwind v4 font mapping (assumes next/font sets --font-* variables in layout.tsx) */
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-roboto-mono);
+}
+
+/* Base document colors from semantic tokens */
+html, body {
+  background: var(--background);
+  color: var(--foreground);
 }
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--color-background);
-  color: var(--color-text);
   overflow-x: hidden;
 }
 
@@ -62,22 +48,22 @@ a:hover {
   text-underline-offset: 3px;
 }
 
-/* Surface + text pairs */
-.text-on-bg        { color: var(--color-text); }
-.text-on-muted     { color: var(--color-text); }
-.text-on-primary   { color: var(--color-primary-foreground); }
-.text-on-secondary { color: var(--color-primary-foreground); }
-.text-on-inverse   { color: #FFFFFF; }
+/* Surface + text pairs using semantic tokens */
+.text-on-bg        { color: var(--foreground); }
+.text-on-muted     { color: var(--foreground); }
+.text-on-primary   { color: var(--primary-foreground); }
+.text-on-secondary { color: var(--secondary-foreground); }
+.text-on-inverse   { color: var(--background); }
 
-.surface-bg        { background: var(--color-background); }
-.surface-muted     { background: var(--color-muted); }
-.surface-primary   { background: var(--color-primary); }
-.surface-secondary { background: var(--color-secondary); }
+.surface-bg        { background: var(--background); }
+.surface-muted     { background: var(--muted); }
+.surface-primary   { background: var(--primary); }
+.surface-secondary { background: var(--secondary); }
 
 /* Image/Video sections: add a scrim to guarantee AA contrast for light text */
 .surface-image {
   position: relative;
-  color: #FFFFFF; /* pairs with the scrim */
+  color: var(--background); /* pairs with the scrim */
 }
 .surface-image::before {
   content: "";
