@@ -112,11 +112,20 @@ export const siteConfigSchema = z.object({
     ownerServices: z.object({
       hero: z.object({ headline: z.string(), subhead: z.string() }),
       valuePillars: z.array(z.object({ title: z.string(), body: z.string(), icon: z.string() })),
-      services: z.array(z.object({ title: z.string(), body: z.string() })),
+      services: z.array(z.object({ 
+        title: z.string(), 
+        body: z.string(),
+        icon: z.string()
+      })),
       pricing: z.array(z.object({ name: z.string(), priceNote: z.string(), includes: z.array(z.string()) })),
       upliftClaim: z.string(),
       onboarding: z.array(z.object({ step: z.string(), description: z.string() })),
-      testimonials: z.array(z.object({ name: z.string(), text: z.string() })),
+      testimonials: z.array(z.object({ 
+        name: z.string(), 
+        text: z.string(), 
+        role: z.string(), 
+        initial: z.string() 
+      })),
       faq: z.array(faqSchema),
       cta: NavItem,
       leadForm: z.object({ heading: z.string(), submitLabel: z.string() }),
@@ -342,16 +351,162 @@ export const siteConfig: SiteConfig = siteConfigSchema.parse({
       },
     },
     ownerServices: {
-      hero: { headline: "Owner services hero headline placeholder", subhead: "Owner services hero subheading placeholder" },
-      valuePillars: [ { title: "Owner value pillar title placeholder", body: "Owner value pillar body placeholder", icon: "bar-chart" } ],
-      services: [ { title: "Service item title placeholder", body: "Service item body placeholder" } ],
-      pricing: [ { name: "Pricing plan name placeholder", priceNote: "Pricing plan note placeholder", includes: ["Pricing include placeholder"] } ],
+      hero: { headline: "Maximize Your Property's Potential", subhead: "Professional property management services designed to increase your revenue and reduce your stress" },
+      valuePillars: [
+        { 
+          title: "Increased Revenue", 
+          body: "Our proven strategies and market expertise help property owners achieve 20-40% higher rental income compared to self-management.", 
+          icon: "trending-up" 
+        },
+        { 
+          title: "Peace of Mind", 
+          body: "24/7 professional management means you can enjoy passive income without the stress of day-to-day property operations.", 
+          icon: "shield" 
+        },
+        { 
+          title: "Premium Guest Experience", 
+          body: "We maintain high standards and provide exceptional service, leading to better reviews and repeat bookings.", 
+          icon: "star" 
+        }
+      ],
+      services: [
+        { 
+          title: "Property Marketing & Listing", 
+          body: "Professional photography, compelling descriptions, and strategic listing placement across all major platforms.", 
+          icon: "camera" 
+        },
+        { 
+          title: "Guest Communication & Support", 
+          body: "24/7 guest support, automated messaging, and personalized assistance throughout their stay.", 
+          icon: "message-circle" 
+        },
+        { 
+          title: "Cleaning & Maintenance", 
+          body: "Regular cleaning services, maintenance coordination, and quality control to maintain property standards.", 
+          icon: "sparkles" 
+        },
+        { 
+          title: "Revenue Optimization", 
+          body: "Dynamic pricing strategies, market analysis, and yield management to maximize your rental income.", 
+          icon: "trending-up" 
+        },
+        { 
+          title: "Booking Management", 
+          body: "Seamless reservation handling, calendar management, and automated booking confirmations.", 
+          icon: "calendar" 
+        },
+        { 
+          title: "Financial Reporting", 
+          body: "Detailed monthly reports, expense tracking, and transparent financial management for your property.", 
+          icon: "file-text" 
+        },
+        { 
+          title: "Property Enhancement", 
+          body: "Strategic recommendations for property improvements and amenities to increase guest satisfaction.", 
+          icon: "home" 
+        },
+        { 
+          title: "Legal Compliance", 
+          body: "Ensure your property meets all local regulations, licensing requirements, and safety standards.", 
+          icon: "shield-check" 
+        }
+      ],
+      pricing: [
+        { name: "Pricing plan name placeholder", priceNote: "Pricing plan note placeholder", includes: ["Pricing include placeholder"] },
+        { name: "Pricing plan name placeholder", priceNote: "Pricing plan note placeholder", includes: ["Pricing include placeholder"] },
+        { name: "Pricing plan name placeholder", priceNote: "Pricing plan note placeholder", includes: ["Pricing include placeholder"] }
+      ],
       upliftClaim: "Revenue uplift claim placeholder",
-      onboarding: [ { step: "Onboarding step title placeholder", description: "Onboarding step description placeholder" } ],
-      testimonials: [ { name: "Owner testimonial name placeholder", text: "Owner testimonial text placeholder" } ],
-      faq: [ { q: "Owner FAQ question placeholder", a: "Owner FAQ answer placeholder" } ],
+      onboarding: [
+        { 
+          step: "Step 1", 
+          description: "Get a free property audit and market analysis to understand your property's potential." 
+        },
+        { 
+          step: "Step 2", 
+          description: "We help you build your rental strategy using our comprehensive property management solution." 
+        },
+        { 
+          step: "Step 3", 
+          description: "You're empowered to earn more with full visibility and tools that are easy to use." 
+        }
+      ],
+      testimonials: [
+        { 
+          name: "Sarah Johnson", 
+          text: "Since partnering with this management team, my rental income has increased by 35% in just 6 months. Their professional approach and attention to detail have made all the difference. I finally have peace of mind knowing my property is in expert hands.",
+          role: "Property Owner",
+          initial: "S"
+        },
+        { 
+          name: "Michael Chen", 
+          text: "The level of service is exceptional. They handle everything from guest communication to maintenance, and the financial reporting is crystal clear. My property has never been more profitable or well-maintained.",
+          role: "Real Estate Investor",
+          initial: "M"
+        },
+        { 
+          name: "Emily Rodriguez", 
+          text: "I was hesitant about property management services, but this team exceeded all my expectations. They've transformed my vacation home into a thriving rental business. The ROI has been incredible.",
+          role: "Vacation Home Owner",
+          initial: "E"
+        },
+        { 
+          name: "David Thompson", 
+          text: "Professional, reliable, and results-driven. They've helped me maximize my property's potential while taking all the stress out of property management. Highly recommend their services.",
+          role: "Property Portfolio Owner",
+          initial: "D"
+        },
+        { 
+          name: "Lisa Park", 
+          text: "The marketing strategies they implemented have brought in higher-quality guests and increased my bookings significantly. Their 24/7 support gives me complete confidence in their service.",
+          role: "Luxury Property Owner",
+          initial: "L"
+        }
+      ],
+      faq: [
+        { 
+          q: "What percentage of my rental income do you take as commission?", 
+          a: "Our commission structure is transparent and competitive. We typically charge 15-20% of gross rental income, which includes all our management services. This covers marketing, guest communication, cleaning, maintenance coordination, and 24/7 support. We provide detailed monthly reports so you always know exactly what you're earning." 
+        },
+        { 
+          q: "How do you handle property maintenance and repairs?", 
+          a: "We have a network of trusted, licensed contractors and maintenance professionals. For minor issues, we handle them immediately to ensure guest satisfaction. For major repairs, we'll contact you for approval and coordinate the work. We also conduct regular property inspections to catch potential issues early." 
+        },
+        { 
+          q: "What happens if a guest damages my property?", 
+          a: "We require all guests to provide a security deposit and have comprehensive insurance coverage. If damage occurs, we document everything thoroughly, work with our insurance partners, and ensure repairs are completed promptly. You'll be kept informed throughout the process and won't be responsible for any costs." 
+        },
+        { 
+          q: "How do you market my property to attract quality guests?", 
+          a: "We use a multi-channel marketing approach including professional photography, compelling descriptions, strategic pricing, and listings on all major platforms. Our team continuously optimizes listings based on market trends and guest feedback to maximize your property's visibility and bookings." 
+        },
+        { 
+          q: "Can I still use my property for personal stays?", 
+          a: "Absolutely! We work with you to block out dates for your personal use. You can reserve your property for family vacations, holidays, or any other personal needs. We'll ensure these dates are marked as unavailable for bookings and coordinate cleaning and preparation for your arrival." 
+        },
+        { 
+          q: "How quickly can you start managing my property?", 
+          a: "We can typically start managing your property within 1-2 weeks of signing our agreement. This includes setting up listings, taking professional photos, establishing cleaning and maintenance protocols, and implementing our management systems. We'll work with your schedule to ensure a smooth transition." 
+        },
+        { 
+          q: "What kind of financial reporting do you provide?", 
+          a: "We provide detailed monthly reports including income, expenses, occupancy rates, and performance metrics. You'll receive transparent accounting with all receipts and documentation. Our online dashboard gives you real-time access to your property's financial performance and booking calendar." 
+        },
+        { 
+          q: "Do you handle all guest communication and support?", 
+          a: "Yes, we provide 24/7 guest support including pre-arrival communication, check-in assistance, and ongoing support during their stay. Our team handles all guest inquiries, issues, and requests, so you don't have to worry about being available around the clock." 
+        },
+        { 
+          q: "What if I'm not satisfied with your services?", 
+          a: "We offer a 30-day satisfaction guarantee. If you're not completely satisfied with our services within the first month, we'll work to address any concerns or you can terminate our agreement without penalty. Our goal is to build long-term partnerships based on trust and results." 
+        },
+        { 
+          q: "How do you ensure my property stays competitive in the market?", 
+          a: "We continuously monitor market trends, competitor pricing, and guest feedback to keep your property competitive. Our dynamic pricing strategies adjust rates based on demand, seasonality, and local events. We also provide recommendations for property improvements to enhance guest satisfaction and increase bookings." 
+        }
+      ],
       cta: { label: "Request consultation", href: "/site/contact" },
-      leadForm: { heading: "Owner lead form heading placeholder", submitLabel: "Owner lead form submit label placeholder" },
+      leadForm: { heading: "Ready to Get Started?", submitLabel: "Request Consultation" },
       onboardingProcess: {
         heading: "Onboarding Process",
       },

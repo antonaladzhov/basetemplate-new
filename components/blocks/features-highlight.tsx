@@ -24,8 +24,8 @@ export default function FeaturesHighlight() {
       <div className="relative h-64 bg-neutral-900">
         {/* Content on Background */}
         <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-4">
-          <h2 className="text-4xl font-bold mb-4">{features.heading}</h2>
-          <p className="text-xl max-w-2xl">
+          <h2 className="text-4xl font-bold mb-4 text-on-primary">{features.heading}</h2>
+          <p className="text-xl max-w-2xl text-on-primary">
             Enjoy a wide array of top-rated amenities designed with your comfort in mind:
           </p>
         </div>
