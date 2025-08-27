@@ -25,7 +25,7 @@ export default function HomePage() {
       {/* Featured Properties */}
       <Reveal>
         <section className="surface-muted text-on-muted py-12">
-          <Container width="wide">
+          <Container width="ultra-wide">
             <PropertyGrid 
               items={home.featuredProperties.items}
               title={home.featuredProperties.title}

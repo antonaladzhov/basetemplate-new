@@ -27,6 +27,10 @@
   max-width: 1400px;
 }
 
+.container.ultra-wide {
+  max-width: 2400px;
+}
+
 /* Grid layouts */
 .grid-auto-fit {
   display: grid;

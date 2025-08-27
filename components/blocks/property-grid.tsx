@@ -31,10 +31,9 @@ export default function PropertyGrid({
   const getCardsPerView = () => {
     if (typeof window === 'undefined') return 4;
     if (window.innerWidth < 640) return 1; // mobile
-    if (window.innerWidth < 768) return 2; // small tablet
-    if (window.innerWidth < 1024) return 3; // tablet
+    if (window.innerWidth < 768) return 2; // tablet
     if (window.innerWidth < 1280) return 4; // desktop
-    return 5; // large desktop
+    return 4; // large desktop - exactly 4 cards
   };
 
   const [cardsPerView, setCardsPerView] = useState(4); // Default to 4 for SSR
@@ -119,9 +118,9 @@ export default function PropertyGrid({
         )}
       </div>
 
-      {/* Slider Container - Break out of parent constraints */}
-      <div className="relative group w-full -mx-8 px-8 overflow-hidden">
-        <div className="max-w-[1920px] mx-auto">
+      {/* Slider Container */}
+      <div className="relative groslider size fixup overflow-hidden max-w-[1920px] xl:max-w-[1600px] 2xl:max-w-[1920px] mx-auto">
+        <div className="w-full overflow-hidden">
           {/* Navigation Arrows */}
           {totalSlides > 1 && (
             <>
@@ -148,7 +147,7 @@ export default function PropertyGrid({
             ref={sliderRef}
             className="flex transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing"
             style={{
-              transform: `translateX(-${currentSlide * 100}%)`,
+              transform: `translateX(-${currentSlide * (100 / cardsPerView)}%)`,
             }}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -162,7 +161,9 @@ export default function PropertyGrid({
               <div
                 key={property.id}
                 className="flex-shrink-0 px-3"
-                style={{ width: `${100 / cardsPerView}%` }}
+                style={{ 
+                  width: `${100 / cardsPerView}%`
+                }}
               >
                 <div className="surface-bg rounded-lg shadow-lg overflow-hidden group/card">
                   {/* Property Image */}
@@ -215,7 +216,7 @@ export default function PropertyGrid({
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`w-2 h-2 rounded-full transition-colors ${
-                index === currentSlide ? "surface-primary" : "surface-muted"
+                index === currentSlide ? "bg-primary" : "bg-gray-400"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
