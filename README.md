@@ -273,6 +273,17 @@ STRIPE_SECRET_KEY="sk_test_..."
 STRIPE_PUBLISHABLE_KEY="pk_test_..."
 ```
 
+### Calry OTA (Dynamic Most Loved Properties)
+
+Add these optional variables to enable fetching listings from Calry OTA. If `CALRY_API_URL` or `CALRY_API_KEY` are not set, the “Most Loved Properties” section will be hidden automatically.
+
+```
+CALRY_API_URL="https://api.calry.app" # Base API URL
+CALRY_API_KEY="your-api-key"          # Workspace API key
+CALRY_TENANT_ID="tenant-id"           # Optional tenant id to scope requests
+CALRY_DISPLAY_CURRENCY="USD"          # Optional ISO 4217 currency code
+```
+
 ## Scripts
 
 - `npm run dev`: Start development server
