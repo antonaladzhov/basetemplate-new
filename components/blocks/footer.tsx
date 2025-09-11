@@ -1,7 +1,8 @@
-import Link from "next/link";
 import { siteConfig } from "@/app/config/site-config";
-import Container from "@/components/ui/container";
 import Button from "@/components/ui/button";
+import Container from "@/components/ui/container";
+import { getCalryEnv } from "@/lib/env";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -19,8 +20,8 @@ export default function Footer() {
               </p>
               {/* List Your Property CTA */}
               <div className="mb-6">
-                <Button 
-                  href="/owner-services" 
+                <Button
+                  href="/owner-services"
                   variant="secondary"
                   className="w-full md:w-auto bg-white text-neutral-900 hover:bg-gray-100"
                 >
@@ -33,16 +34,21 @@ export default function Footer() {
             <div>
               <h4 className="font-medium mb-4 text-white">Quick Links</h4>
               <ul className="space-y-2">
-                {siteConfig.footer.quickLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-gray-300 hover:text-white transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {siteConfig.footer.quickLinks.map((link) => {
+                  const { TENANT_PUBLIC_URL } = getCalryEnv();
+                  const tenantBase = TENANT_PUBLIC_URL?.replace(/\/$/, "");
+                  const href = link.label.toLowerCase().includes("properties") && tenantBase ? `${tenantBase}` : link.href;
+                  return (
+                    <li key={link.label}>
+                      <Link
+                        href={href}
+                        className="text-sm text-gray-300 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

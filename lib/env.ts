@@ -16,7 +16,7 @@ export function getCalryEnv(): CalryEnv {
         CALRY_API_KEY: process.env.CALRY_API_KEY,
         CALRY_TENANT_ID: process.env.CALRY_TENANT_ID,
         CALRY_DISPLAY_CURRENCY: process.env.CALRY_DISPLAY_CURRENCY,
-        TENANT_PUBLIC_URL: process.env.TENANT_PUBLIC_URL,
+        TENANT_PUBLIC_URL: process.env.NEXT_PUBLIC_TENANT_PUBLIC_URL,
     });
 }
 

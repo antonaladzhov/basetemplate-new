@@ -216,7 +216,7 @@ export default function PropertyGrid({
               );
               const shouldWrap = !hideItemLinks && Boolean(property.href);
               const body = shouldWrap ? (
-                <Link href={property.href!} className="block" onClick={(e) => { if (dragMovedRef.current) e.preventDefault(); }}>
+                <Link href={property.href!} target="_blank" rel="noopener noreferrer" className="block" onClick={(e) => { if (dragMovedRef.current) e.preventDefault(); }}>
                   {content}
                 </Link>
               ) : content;
@@ -255,6 +255,8 @@ export default function PropertyGrid({
         <div className="text-center mt-12">
           <Link
             href={exploreHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 surface-primary text-on-primary rounded-lg hover:surface-primary/90 transition-colors"
           >
             Explore All Properties

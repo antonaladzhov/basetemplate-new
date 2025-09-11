@@ -2,7 +2,7 @@ import { getCalryEnv } from "@/lib/env";
 import { Property } from "@/lib/types";
 import "server-only";
 
-type CalryListing = {
+export type CalryListing = {
     id: string;
     name: string;
     internalName?: string;
@@ -16,6 +16,8 @@ type CalryListing = {
         country?: string;
         postal_code?: string;
     };
+    latitude?: number;
+    longitude?: number;
     bedroomCount?: number;
     bathroomCount?: number;
     maxOccupancy?: number;
@@ -102,7 +104,7 @@ export function mapCalryListingToProperty(listing: CalryListing): Property | nul
 
     const { TENANT_PUBLIC_URL } = getCalryEnv();
     const base = TENANT_PUBLIC_URL?.replace(/\/$/, "") || "";
-    const href = base ? `${base}/property/${listing.id}` : "/site/properties";
+    const href = base ? `${base}/property/${listing.id}` : "";
 
     return {
         id: listing.id,
@@ -116,6 +118,116 @@ export function mapCalryListingToProperty(listing: CalryListing): Property | nul
         priceFrom: listing.startPrice ?? 0,
         href,
     };
+}
+
+export async function fetchLocationsForSearch(limit: number = 100): Promise<{ label: string; lat: number; lng: number }[]> {
+    const env = getCalryEnv();
+    if (!env.CALRY_API_URL || !env.CALRY_API_KEY) {
+        return [];
+    }
+
+    const url = new URL("/api/v1/listing", env.CALRY_API_URL);
+    url.searchParams.set("status", "ACTIVE");
+    url.searchParams.set("limit", String(Math.max(limit, 50)));
+    if (env.CALRY_DISPLAY_CURRENCY) {
+        url.searchParams.set("displayCurrency", env.CALRY_DISPLAY_CURRENCY);
+    }
+
+    const headers: Record<string, string> = {
+        "x-calry-api-key": env.CALRY_API_KEY,
+    };
+    if (env.CALRY_TENANT_ID) {
+        headers["x-calry-tenant-id"] = env.CALRY_TENANT_ID;
+    }
+
+    try {
+        const res = await fetch(url.toString(), {
+            method: "GET",
+            headers,
+            next: { revalidate: 300 },
+        });
+        if (!res.ok) return [];
+        const payload = (await res.json()) as CalryListingsResponse;
+        const listings = Array.isArray(payload.data) ? payload.data : [];
+        const map = new Map<string, { label: string; lat: number; lng: number }>();
+        for (const l of listings) {
+            const city = l.address?.city?.trim();
+            const country = l.address?.country?.trim();
+            const label = [city, country].filter(Boolean).join(", ");
+            if (!label || typeof l.latitude !== "number" || typeof l.longitude !== "number") continue;
+            const key = label.toLowerCase();
+            if (!map.has(key)) {
+                map.set(key, { label, lat: l.latitude, lng: l.longitude });
+            }
+        }
+        return Array.from(map.values());
+    } catch {
+        return [];
+    }
+}
+
+export async function fetchFeaturedAndLocations(options?: { listingsLimit?: number; scanLimit?: number }): Promise<{ properties: Property[]; locations: { label: string; lat: number; lng: number }[] }> {
+    const listingsLimit = options?.listingsLimit ?? 10;
+    const scanLimit = Math.max(options?.scanLimit ?? 100, listingsLimit);
+
+    const env = getCalryEnv();
+    if (!env.CALRY_API_URL || !env.CALRY_API_KEY) {
+        return { properties: [], locations: [] };
+    }
+
+    const url = new URL("/api/v1/listing", env.CALRY_API_URL);
+    url.searchParams.set("status", "ACTIVE");
+    url.searchParams.set("limit", String(scanLimit));
+    if (env.CALRY_DISPLAY_CURRENCY) {
+        url.searchParams.set("displayCurrency", env.CALRY_DISPLAY_CURRENCY);
+    }
+
+    const headers: Record<string, string> = {
+        "x-calry-api-key": env.CALRY_API_KEY,
+    };
+    if (env.CALRY_TENANT_ID) {
+        headers["x-calry-tenant-id"] = env.CALRY_TENANT_ID;
+    }
+
+    try {
+        const res = await fetch(url.toString(), {
+            method: "GET",
+            headers,
+            next: { revalidate: 300 },
+        });
+        if (!res.ok) return { properties: [], locations: [] };
+
+        const payload = (await res.json()) as CalryListingsResponse;
+        const listings = Array.isArray(payload.data) ? payload.data : [];
+
+        // Sort and map to properties
+        listings.sort((a, b) => {
+            const ownedDiff = Number(Boolean(b.is_tenant_owned)) - Number(Boolean(a.is_tenant_owned));
+            if (ownedDiff !== 0) return ownedDiff;
+            const ratingA = a.rating?.average ?? 0;
+            const ratingB = b.rating?.average ?? 0;
+            return ratingB - ratingA;
+        });
+        const properties = listings.map(mapCalryListingToProperty).filter(Boolean).slice(0, listingsLimit) as Property[];
+
+        // Build unique locations
+        const map = new Map<string, { label: string; lat: number; lng: number }>();
+        for (const l of listings) {
+            const city = l.address?.city?.trim();
+            const country = l.address?.country?.trim();
+            const label = [city, country].filter(Boolean).join(", ");
+            if (!label || typeof l.latitude !== "number" || typeof l.longitude !== "number") continue;
+            const key = label.toLowerCase();
+            if (!map.has(key)) {
+                map.set(key, { label, lat: l.latitude, lng: l.longitude });
+            }
+        }
+        const locations = Array.from(map.values());
+
+        return { properties, locations };
+    } catch {
+        return { properties: [], locations: [] };
+    }
 }
 
 

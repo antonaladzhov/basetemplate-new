@@ -9,24 +9,31 @@ import Reviews from "@/components/blocks/reviews";
 import Button from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import Reveal from "@/components/ui/reveal";
+import { fetchFeaturedAndLocations } from "@/lib/calry/listings";
+import { getCalryEnv, hasCalryCredentials } from "@/lib/env";
 import dynamic from "next/dynamic";
-const MostLovedPropertiesSection = dynamic(
-  () => import("@/components/blocks/most-loved-properties.server"),
+const FeaturedListingsSection = dynamic(
+  () => import("@/components/blocks/featured-listings.server"),
   { ssr: true }
 );
 
-export default function HomePage() {
+export default async function HomePage() {
   const home = siteConfig.pages.home;
+  const canFetch = hasCalryCredentials();
+  const { properties, locations } = canFetch ? await fetchFeaturedAndLocations({ listingsLimit: 10, scanLimit: 100 }) : { properties: [], locations: [] };
+  const { TENANT_PUBLIC_URL } = getCalryEnv();
 
   return (
     <>
-      <Hero />
+      <Hero locations={locations} bookingEnabled={canFetch} tenantBaseUrl={TENANT_PUBLIC_URL || ""} />
       <Reveal>
-        <KeyValueStrip />
+        <div className="relative z-0">
+          <KeyValueStrip />
+        </div>
       </Reveal>
 
-      {/* Featured Properties - Dynamic from Calry */}
-      <MostLovedPropertiesSection
+      {/* Featured Listings - Dynamic from Calry */}
+      <FeaturedListingsSection
         title={home.featuredProperties.title}
         description={home.featuredProperties.description}
         exploreHref={"/site/properties"}
