@@ -42,13 +42,8 @@ export default function Header({ tenantBase }: { tenantBase?: string }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hide header on homepage since hero has integrated navbar
-  if (isHomePage) {
-    return null;
-  }
-
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+    <header className={`fixed top-0 left-0 right-0 z-[2000] transition-all duration-300 ${isScrolled
       ? 'surface-bg text-on-bg border-b border-border shadow-sm'
       : 'bg-transparent text-on-bg'
       }`}>
