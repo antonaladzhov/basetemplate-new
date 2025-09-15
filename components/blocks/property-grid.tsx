@@ -1,31 +1,34 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import { Property } from "@/lib/types";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { formatPrice, formatRating } from "@/lib/utils";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import Container from "@/components/ui/container";
+import { useEffect, useRef, useState } from "react";
 
 interface PropertyGridProps {
   items: Property[];
   title?: string;
   description?: string;
   showExploreAll?: boolean;
+  exploreHref?: string;
+  hideItemLinks?: boolean;
 }
 
-export default function PropertyGrid({ 
-  items, 
+export default function PropertyGrid({
+  items,
   title = "Most Loved Properties",
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing",
-  showExploreAll = true 
+  showExploreAll = true,
+  exploreHref = "/site/properties",
+  hideItemLinks = true,
 }: PropertyGridProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const lastXRef = useRef(0);
+  const dragMovedRef = useRef(false);
 
   // Calculate how many cards to show based on screen size
   const getCardsPerView = () => {
@@ -42,7 +45,7 @@ export default function PropertyGrid({
     // Set initial cards per view after component mounts
     const newCardsPerView = getCardsPerView();
     setCardsPerView(newCardsPerView);
-    
+
     const handleResize = () => {
       const newCardsPerView = getCardsPerView();
       setCardsPerView(newCardsPerView);
@@ -73,6 +76,8 @@ export default function PropertyGrid({
     setIsDragging(true);
     setStartX(e.pageX - (sliderRef.current?.offsetLeft || 0));
     setScrollLeft(sliderRef.current?.scrollLeft || 0);
+    lastXRef.current = e.pageX - (sliderRef.current?.offsetLeft || 0);
+    dragMovedRef.current = false;
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -83,9 +88,20 @@ export default function PropertyGrid({
     if (sliderRef.current) {
       sliderRef.current.scrollLeft = scrollLeft - walk;
     }
+    lastXRef.current = x;
+    if (Math.abs(x - startX) > 5) dragMovedRef.current = true;
   };
 
   const handleMouseUp = () => {
+    if (isDragging) {
+      const delta = lastXRef.current - startX;
+      const threshold = 40;
+      if (delta > threshold) {
+        prevSlide();
+      } else if (delta < -threshold) {
+        nextSlide();
+      }
+    }
     setIsDragging(false);
   };
 
@@ -93,6 +109,8 @@ export default function PropertyGrid({
     setIsDragging(true);
     setStartX(e.touches[0].pageX - (sliderRef.current?.offsetLeft || 0));
     setScrollLeft(sliderRef.current?.scrollLeft || 0);
+    lastXRef.current = e.touches[0].pageX - (sliderRef.current?.offsetLeft || 0);
+    dragMovedRef.current = false;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -102,9 +120,20 @@ export default function PropertyGrid({
     if (sliderRef.current) {
       sliderRef.current.scrollLeft = scrollLeft - walk;
     }
+    lastXRef.current = x;
+    if (Math.abs(x - startX) > 5) dragMovedRef.current = true;
   };
 
   const handleTouchEnd = () => {
+    if (isDragging) {
+      const delta = lastXRef.current - startX;
+      const threshold = 40;
+      if (delta > threshold) {
+        prevSlide();
+      } else if (delta < -threshold) {
+        nextSlide();
+      }
+    }
     setIsDragging(false);
   };
 
@@ -157,53 +186,51 @@ export default function PropertyGrid({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {items.map((property, index) => (
-              <div
-                key={property.id}
-                className="flex-shrink-0 px-3"
-                style={{ 
-                  width: `${100 / cardsPerView}%`
-                }}
-              >
+            {items.map((property) => {
+              const content = (
                 <div className="surface-bg rounded-lg shadow-lg overflow-hidden group/card">
-                  {/* Property Image */}
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src="/images/placeholders/placeholder-800x600.svg"
+                      src={property.imageUrl || "/images/placeholders/placeholder-800x600.svg"}
                       alt={property.imageAlt}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
                     />
                   </div>
-
-                  {/* Property Info */}
                   <div className="p-5">
                     <h3 className="text-lg font-semibold text-on-bg mb-2">{property.title}</h3>
                     <p className="text-on-bg/70 mb-3">{property.location}</p>
-                    
-                    {/* Property Details */}
                     <div className="flex items-center gap-4 text-sm text-on-bg/70 mb-4">
                       <span>{property.beds} beds</span>
                       <span>{property.baths} baths</span>
                       <span>{property.guests} guests</span>
                     </div>
-
-                    {/* Price */}
                     <div className="flex items-center justify-between">
                       <div>
                         <span className="text-sm text-on-bg/70">From</span>
                         <div className="text-xl font-bold text-on-bg">${property.priceFrom}/night</div>
                       </div>
-                      <Link
-                        href={property.href}
-                        className="text-primary hover:text-primary/80 font-medium"
-                      >
-                        View Details →
-                      </Link>
+                      {/* Intentionally no inner link to avoid nested anchors when card is wrapped */}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+              const shouldWrap = !hideItemLinks && Boolean(property.href);
+              const body = shouldWrap ? (
+                <Link href={property.href!} target="_blank" rel="noopener noreferrer" className="block" onClick={(e) => { if (dragMovedRef.current) e.preventDefault(); }}>
+                  {content}
+                </Link>
+              ) : content;
+
+              return (
+                <div
+                  key={property.id}
+                  className="flex-shrink-0 px-3"
+                  style={{ width: `${100 / cardsPerView}%` }}
+                >
+                  {body}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -215,9 +242,8 @@ export default function PropertyGrid({
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                index === currentSlide ? "bg-primary" : "bg-gray-400"
-              }`}
+              className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? "bg-primary" : "bg-gray-400"
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -228,7 +254,9 @@ export default function PropertyGrid({
       {showExploreAll && (
         <div className="text-center mt-12">
           <Link
-            href="/properties"
+            href={exploreHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 surface-primary text-on-primary rounded-lg hover:surface-primary/90 transition-colors"
           >
             Explore All Properties

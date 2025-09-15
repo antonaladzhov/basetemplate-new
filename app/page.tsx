@@ -1,40 +1,44 @@
 import { siteConfig } from "@/app/config/site-config";
-import Container from "@/components/ui/container";
-import Hero from "@/components/blocks/hero";
-import Reveal from "@/components/ui/reveal";
-import KeyValueStrip from "@/components/blocks/key-value-strip";
-import PropertyGrid from "@/components/blocks/property-grid";
 import ExperiencesHighlight from "@/components/blocks/experiences-highlight";
-import FeaturesHighlight from "@/components/blocks/features-highlight";
-import Reviews from "@/components/blocks/reviews";
-import LatestStories from "@/components/blocks/latest-stories";
 import FAQ from "@/components/blocks/faq";
+import FeaturesHighlight from "@/components/blocks/features-highlight";
+import Hero from "@/components/blocks/hero";
+import KeyValueStrip from "@/components/blocks/key-value-strip";
+import LatestStories from "@/components/blocks/latest-stories";
+import Reviews from "@/components/blocks/reviews";
 import Button from "@/components/ui/button";
-import Card from "@/components/ui/card";
+import Container from "@/components/ui/container";
+import Reveal from "@/components/ui/reveal";
+import { fetchFeaturedAndLocations } from "@/lib/calry/listings";
+import { getCalryEnv, hasCalryCredentials } from "@/lib/env";
+import dynamic from "next/dynamic";
+const FeaturedListingsSection = dynamic(
+  () => import("@/components/blocks/featured-listings.server"),
+  { ssr: true }
+);
 
-export default function HomePage() {
+export default async function HomePage() {
   const home = siteConfig.pages.home;
+  const canFetch = hasCalryCredentials();
+  const { properties, locations } = canFetch ? await fetchFeaturedAndLocations({ listingsLimit: 10, scanLimit: 100 }) : { properties: [], locations: [] };
+  const { TENANT_PUBLIC_URL } = getCalryEnv();
 
   return (
     <>
-      <Hero />
+      <Hero locations={locations} bookingEnabled={canFetch} tenantBaseUrl={TENANT_PUBLIC_URL || ""} />
       <Reveal>
-        <KeyValueStrip />
+        <div className="relative z-0">
+          <KeyValueStrip />
+        </div>
       </Reveal>
-      
-      {/* Featured Properties */}
-      <Reveal>
-        <section className="surface-muted text-on-muted py-12">
-          <Container width="ultra-wide">
-            <PropertyGrid 
-              items={home.featuredProperties.items}
-              title={home.featuredProperties.title}
-              description={home.featuredProperties.description}
-              showExploreAll={true}
-            />
-          </Container>
-        </section>
-      </Reveal>
+
+      {/* Featured Listings - Dynamic from Calry */}
+      <FeaturedListingsSection
+        title={home.featuredProperties.title}
+        description={home.featuredProperties.description}
+        exploreHref={"/site/properties"}
+        limit={10}
+      />
 
       {/* Experiences Highlight */}
       <Reveal>
